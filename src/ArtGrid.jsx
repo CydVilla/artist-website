@@ -8,6 +8,12 @@ export function ArtGrid({ images, availableTypes }) {
   const [filteredImages, setFilteredImages] = useState(images);
   const [selectedType, setSelectedType] = useState('all'); // Default to all
 
+  const sortedTypes = availableTypes.sort((a, b) => a.localeCompare(b));
+  if (sortedTypes.includes('other')) {
+    sortedTypes.splice(sortedTypes.indexOf('other'), 1);
+    sortedTypes.push('other');
+  }
+
   useEffect(() => {
     if (selectedType === 'all') {
       setFilteredImages(images);
@@ -38,12 +44,11 @@ export function ArtGrid({ images, availableTypes }) {
     return d instanceof Date && !isNaN(d);
   }
 
-
   return (
     <div className="relative leading-[5px]">
       <div className="mb-4">
         <button onClick={() => setSelectedType("all")}>All</button>
-        {availableTypes.map((type) => (
+        {sortedTypes.map((type) => (
           <button
             key={type}
             onClick={() => setSelectedType(type)}
@@ -52,7 +57,6 @@ export function ArtGrid({ images, availableTypes }) {
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </button>
         ))}
-
       </div>
 
       <input
