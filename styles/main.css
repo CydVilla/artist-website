@@ -67,3 +67,9 @@ img.next-image {
 .nav-line .nav-link {
   color: #69778c;
 }
+
+button {
+  padding: 10px 15px; /* 10px vertical padding, 15px horizontal padding */
+  margin: 5px;       /* Space between buttons */
+  /* Add other styles if needed */
+}

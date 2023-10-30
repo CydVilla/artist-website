@@ -34,15 +34,25 @@ export function ArtGrid({ images, availableTypes }) {
   useArrowKeys(isModalVisible, showNextImage, showPreviousImage);
   const pct = (thumbnailWidth - 10) / 0.9;
 
+  const isValidDate = (d) => {
+    return d instanceof Date && !isNaN(d);
+  }
+
+
   return (
     <div className="relative leading-[5px]">
       <div className="mb-4">
-        <button onClick={() => setSelectedType("all")} style={{padding: '4px'}}>All</button>
-        {availableTypes.map(type => (
-          <button key={type} onClick={() => setSelectedType(type)}>
-            {type}
+        <button onClick={() => setSelectedType("all")}>All</button>
+        {availableTypes.map((type) => (
+          <button
+            key={type}
+            onClick={() => setSelectedType(type)}
+            className={selectedType === type ? 'active' : ''}
+          >
+            {type.charAt(0).toUpperCase() + type.slice(1)}
           </button>
         ))}
+
       </div>
 
       <input
@@ -90,8 +100,9 @@ export function ArtGrid({ images, availableTypes }) {
               src={filteredImages[currentIndex].imageUrl}
             />
             <p className="absolute bottom-0 w-full text-center text-slate-300/30">
-              {filteredImages[currentIndex].date.toISOString().slice(0, 10)}
+              {isValidDate(filteredImages[currentIndex].date) ? filteredImages[currentIndex].date.toISOString().slice(0, 10) : 'Date Uploaded'}
             </p>
+
           </div>
           <button
             className="absolute text-3xl text-white transform -translate-y-1/2 right-4 top-1/2"
